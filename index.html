@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pro Typing Speed Tester</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      background:
+      linear-gradient(135deg,#0f172a,#1e293b,#111827);
+      padding:30px;
+      overflow-y:auto;
+    }
+
+    /* Background Glow */
+    body::before{
+      content:"";
+      position:fixed;
+      width:400px;
+      height:400px;
+      background:#7c3aed;
+      filter:blur(180px);
+      top:-100px;
+      left:-100px;
+      opacity:0.5;
+      z-index:-1;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      width:350px;
+      height:350px;
+      background:#06b6d4;
+      filter:blur(180px);
+      bottom:-120px;
+      right:-100px;
+      opacity:0.4;
+      z-index:-1;
+    }
+
+    .container{
+      position:relative;
+      width:900px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      backdrop-filter:blur(15px);
+      border-radius:25px;
+      padding:35px;
+      box-shadow:
+      0 10px 40px rgba(0,0,0,0.4);
+
+      margin-top:40px;
+      margin-bottom:40px;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:25px;
+      flex-wrap:wrap;
+      gap:15px;
+    }
+
+    h1{
+      color:white;
+      font-size:32px;
+      font-weight:700;
+      letter-spacing:1px;
+    }
+
+    .timer-box{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:12px 22px;
+      border-radius:15px;
+      color:white;
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .paragraph{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:28px;
+      border-radius:20px;
+      color:#e2e8f0;
+      line-height:2;
+      font-size:18px;
+      height:260px;
+      overflow-y:auto;
+      margin-bottom:25px;
+      box-shadow:inset 0 0 15px rgba(255,255,255,0.03);
+    }
+
+    .paragraph::-webkit-scrollbar{
+      width:8px;
+    }
+
+    .paragraph::-webkit-scrollbar-thumb{
+      background:#7c3aed;
+      border-radius:20px;
+    }
+
+    textarea{
+      width:100%;
+      height:170px;
+      border:none;
+      outline:none;
+      resize:none;
+      border-radius:20px;
+      padding:25px;
+      font-size:17px;
+      line-height:1.8;
+      background:rgba(255,255,255,0.08);
+      color:white;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:0.3s;
+      margin-bottom:25px;
+    }
+
+    textarea:focus{
+      border:1px solid #8b5cf6;
+      box-shadow:0 0 20px rgba(139,92,246,0.4);
+    }
+
+    textarea::placeholder{
+      color:#94a3b8;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-bottom:25px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:20px;
+      padding:25px;
+      text-align:center;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      background:rgba(255,255,255,0.1);
+    }
+
+    .card h2{
+      color:#cbd5e1;
+      font-size:16px;
+      margin-bottom:10px;
+      font-weight:500;
+    }
+
+    .card span{
+      font-size:35px;
+      font-weight:700;
+      color:white;
+    }
+
+    button{
+      width:100%;
+      padding:18px;
+      border:none;
+      border-radius:18px;
+      background:linear-gradient(135deg,#7c3aed,#06b6d4);
+      color:white;
+      font-size:18px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+      letter-spacing:0.5px;
+    }
+
+    button:hover{
+      transform:scale(1.02);
+      box-shadow:0 10px 30px rgba(124,58,237,0.5);
+    }
+
+    @media(max-width:768px){
+
+      .container{
+        padding:25px;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        font-size:25px;
+      }
+
+      .paragraph{
+        height:320px;
+        font-size:16px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="top">
+
+      <h1>Typing Speed Tester</h1>
+
+      <div class="timer-box">
+        Time Left: <span id="time">60</span>s
+      </div>
+
+    </div>
+
+    <div class="paragraph" id="paragraph"></div>
+
+    <textarea 
+      id="inputBox"
+      placeholder="Start typing here..."
+    ></textarea>
+
+    <div class="stats">
+
+      <div class="card">
+        <h2>Words Per Minute</h2>
+        <span id="wpm">0</span>
+      </div>
+
+      <div class="card">
+        <h2>Accuracy</h2>
+        <span id="accuracy">0</span>%
+      </div>
+
+      <div class="card">
+        <h2>Time</h2>
+        <span id="timerCard">60</span>s
+      </div>
+
+    </div>
+
+    <button onclick="restartTest()">
+      Restart Test
+    </button>
+
+  </div>
+
+  <script>
+
+    const paragraphs = [
+
+`Technology has changed the modern world rapidly over the last few decades. People now depend on smartphones computers and internet services for communication education entertainment and business activities. Students use online platforms to learn programming design and many other technical skills from their homes. Companies are also shifting toward digital systems because automation saves time reduces manual work and improves productivity in many industries around the world.`,
+
+`Programming is one of the most valuable skills in the technology industry because software powers almost every modern device and service. Developers build websites mobile applications banking systems hospital management software and business tools that millions of people use daily. Learning programming requires patience consistency and strong logical thinking because solving coding problems takes regular practice and experimentation with different solutions and technologies.`,
+
+`Frontend development focuses on creating the visual parts of websites and applications that users directly interact with every day. Technologies like HTML CSS and JavaScript are the foundation of frontend development while frameworks such as React Angular and Vue help developers build larger and more interactive applications efficiently. A strong frontend developer also understands responsive design user experience optimization and browser compatibility for professional projects.`,
+
+`Backend development is responsible for handling servers databases authentication systems and application logic behind the scenes. Backend developers use technologies such as Node.js ASP.NET Core Java Spring Boot and Django to create APIs and manage data securely. Without backend systems applications cannot store user information process requests or connect with databases effectively which makes backend development essential for large scale software systems.`,
+
+`Artificial intelligence is transforming industries across the world by automating repetitive tasks analyzing large amounts of data and improving decision making processes. AI tools can generate images write code answer questions and assist businesses with customer support and analytics. However developers who understand software engineering system design debugging and problem solving will still remain valuable because companies need skilled engineers to build maintain and improve complex systems.`
+
+    ];
+
+    const paragraphElement = document.getElementById("paragraph");
+    const inputBox = document.getElementById("inputBox");
+
+    const timeText = document.getElementById("time");
+    const timerCard = document.getElementById("timerCard");
+
+    const wpmText = document.getElementById("wpm");
+    const accuracyText = document.getElementById("accuracy");
+
+    let currentParagraph = "";
+    let timeLeft = 60;
+    let timer;
+    let started = false;
+
+    function loadParagraph(){
+
+      const randomIndex = Math.floor(Math.random() * paragraphs.length);
+
+      currentParagraph = paragraphs[randomIndex];
+
+      paragraphElement.innerText = currentParagraph;
+
+    }
+
+    loadParagraph();
+
+    inputBox.addEventListener("input", () => {
+
+      if(!started){
+
+        started = true;
+        startTimer();
+
+      }
+
+      const typedText = inputBox.value;
+
+      let correctChars = 0;
+
+      for(let i = 0; i < typedText.length; i++){
+
+        if(typedText[i] === currentParagraph[i]){
+
+          correctChars++;
+
+        }
+
+      }
+
+      let accuracy = 0;
+
+      if(typedText.length > 0){
+
+        accuracy = Math.floor((correctChars / typedText.length) * 100);
+
+      }
+
+      accuracyText.innerText = accuracy;
+
+      let wordsTyped = typedText.trim().split(" ").length;
+
+      let minutes = (60 - timeLeft) / 60;
+
+      let wpm = 0;
+
+      if(minutes > 0){
+
+        wpm = Math.floor(wordsTyped / minutes);
+
+      }
+
+      wpmText.innerText = wpm;
+
+    });
+
+    function startTimer(){
+
+      timer = setInterval(() => {
+
+        if(timeLeft > 0){
+
+          timeLeft--;
+
+          timeText.innerText = timeLeft;
+          timerCard.innerText = timeLeft;
+
+        }
+        else{
+
+          clearInterval(timer);
+
+          inputBox.disabled = true;
+
+        }
+
+      },1000);
+
+    }
+
+    function restartTest(){
+
+      clearInterval(timer);
+
+      timeLeft = 60;
+      started = false;
+
+      timeText.innerText = timeLeft;
+      timerCard.innerText = timeLeft;
+
+      wpmText.innerText = 0;
+      accuracyText.innerText = 0;
+
+      inputBox.value = "";
+
+      inputBox.disabled = false;
+
+      loadParagraph();
+
+    }
+
+  </script>
+
+</body>
+</html>
