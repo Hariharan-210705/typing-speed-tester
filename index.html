@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Advanced Typing Speed Tester</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,11 @@
 
     body{
       min-height:100vh;
-      background:linear-gradient(135deg,#0f172a,#1e293b,#111827);
+      background:
+      radial-gradient(circle at top left,#7c3aed33,transparent 30%),
+      radial-gradient(circle at bottom right,#06b6d433,transparent 30%),
+      linear-gradient(135deg,#020617,#0f172a,#111827);
+
       display:flex;
       justify-content:center;
       align-items:flex-start;
@@ -29,12 +33,40 @@
 
     .container{
       width:1000px;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.1);
-      backdrop-filter:blur(15px);
-      border-radius:25px;
-      padding:35px;
-      box-shadow:0 10px 40px rgba(0,0,0,0.4);
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(18px);
+      border-radius:30px;
+      padding:40px;
+      box-shadow:0 15px 50px rgba(0,0,0,0.4);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .container::before{
+      content:"";
+      position:absolute;
+      width:250px;
+      height:250px;
+      background:#7c3aed;
+      border-radius:50%;
+      filter:blur(120px);
+      top:-120px;
+      right:-100px;
+      opacity:0.35;
+    }
+
+    .container::after{
+      content:"";
+      position:absolute;
+      width:250px;
+      height:250px;
+      background:#06b6d4;
+      border-radius:50%;
+      filter:blur(120px);
+      bottom:-120px;
+      left:-100px;
+      opacity:0.3;
     }
 
     .header{
@@ -42,35 +74,48 @@
       justify-content:space-between;
       align-items:center;
       flex-wrap:wrap;
-      gap:15px;
-      margin-bottom:25px;
+      gap:20px;
+      margin-bottom:30px;
+      position:relative;
+      z-index:2;
     }
 
     h1{
-      font-size:32px;
+      font-size:35px;
       font-weight:700;
+      background:linear-gradient(to right,#ffffff,#c4b5fd,#67e8f9);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
     .difficulty-select{
-      padding:12px 18px;
+      padding:14px 20px;
       border:none;
-      border-radius:12px;
-      background:#7c3aed;
-      color:white;
-      font-size:16px;
       outline:none;
+      border-radius:15px;
+      background:#000;
+      color:white;
+      border:1px solid rgba(255,255,255,0.1);
+      font-size:15px;
       cursor:pointer;
     }
 
+    .difficulty-select option{
+      background:black;
+      color:white;
+    }
+
     .typing-box{
+      position:relative;
+      z-index:2;
       background:rgba(255,255,255,0.05);
-      border-radius:20px;
-      padding:30px;
-      line-height:2;
-      font-size:22px;
-      margin-bottom:25px;
-      min-height:220px;
       border:1px solid rgba(255,255,255,0.08);
+      border-radius:25px;
+      padding:35px;
+      line-height:2.2;
+      font-size:22px;
+      min-height:320px;
+      margin-bottom:30px;
     }
 
     .typing-box span.correct{
@@ -79,99 +124,110 @@
 
     .typing-box span.wrong{
       color:#ef4444;
-      background:rgba(239,68,68,0.15);
-      border-radius:4px;
+      background:rgba(239,68,68,0.2);
+      border-radius:5px;
     }
 
     .typing-box span.active{
       background:#7c3aed;
-      border-radius:4px;
+      border-radius:5px;
       color:white;
     }
 
     textarea{
       width:100%;
-      height:180px;
+      height:200px;
       padding:25px;
       border:none;
       outline:none;
       resize:none;
-      border-radius:20px;
-      background:rgba(255,255,255,0.08);
+      border-radius:25px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.08);
       color:white;
       font-size:18px;
       line-height:1.8;
-      margin-bottom:25px;
-      border:1px solid rgba(255,255,255,0.08);
+      margin-bottom:30px;
     }
 
     textarea:focus{
       border:1px solid #7c3aed;
-      box-shadow:0 0 20px rgba(124,58,237,0.4);
+      box-shadow:0 0 25px rgba(124,58,237,0.3);
     }
 
     textarea::placeholder{
       color:#94a3b8;
     }
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:20px;
-      margin-bottom:25px;
-    }
-
-    .card{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:18px;
-      padding:20px;
-      text-align:center;
-    }
-
-    .card h2{
-      font-size:15px;
-      color:#cbd5e1;
-      margin-bottom:10px;
-    }
-
-    .card span{
-      font-size:32px;
-      font-weight:700;
-    }
-
     .progress-container{
       width:100%;
-      height:14px;
+      height:16px;
       background:rgba(255,255,255,0.08);
       border-radius:20px;
       overflow:hidden;
-      margin-bottom:25px;
+      margin-bottom:30px;
     }
 
     .progress-bar{
       width:0%;
       height:100%;
       background:linear-gradient(90deg,#7c3aed,#06b6d4);
-      transition:0.2s;
+      transition:0.3s;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:20px;
+      margin-bottom:30px;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:25px;
+      text-align:center;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:#7c3aed;
+    }
+
+    .card h2{
+      font-size:14px;
+      margin-bottom:12px;
+      color:#cbd5e1;
+      font-weight:500;
+    }
+
+    .card span{
+      font-size:35px;
+      font-weight:700;
     }
 
     .buttons{
       display:flex;
-      gap:15px;
+      gap:20px;
       flex-wrap:wrap;
+      position:relative;
+      z-index:2;
     }
 
     button{
       flex:1;
-      padding:16px;
+      padding:18px;
       border:none;
-      border-radius:15px;
+      border-radius:18px;
       font-size:17px;
       font-weight:600;
       cursor:pointer;
-      transition:0.3s;
       color:white;
+      transition:0.3s;
     }
 
     .restart-btn{
@@ -183,31 +239,24 @@
     }
 
     button:hover{
-      transform:translateY(-3px);
+      transform:translateY(-4px);
     }
 
     .light-mode{
-      background:#f1f5f9;
+      background:linear-gradient(135deg,#dbeafe,#f8fafc,#e0f2fe);
       color:#111827;
     }
 
     .light-mode .container{
-      background:white;
-      color:#111827;
+      background:rgba(255,255,255,0.75);
     }
 
-    .light-mode textarea{
+    .light-mode .typing-box,
+    .light-mode textarea,
+    .light-mode .card,
+    .light-mode .difficulty-select{
+      background:rgba(255,255,255,0.7);
       color:#111827;
-      background:#f8fafc;
-    }
-
-    .light-mode .typing-box{
-      background:#f8fafc;
-      color:#111827;
-    }
-
-    .light-mode .card{
-      background:#f8fafc;
     }
 
     @media(max-width:900px){
@@ -224,16 +273,20 @@
         grid-template-columns:1fr;
       }
 
+      .buttons{
+        flex-direction:column;
+      }
+
+      h1{
+        font-size:28px;
+      }
+
       .typing-box{
         font-size:18px;
       }
 
       textarea{
         font-size:16px;
-      }
-
-      h1{
-        font-size:25px;
       }
 
     }
@@ -312,205 +365,219 @@
 
   </div>
 
-  <script>
+<script>
 
-    const paragraphs = {
+const paragraphs = {
 
-      easy:[
-        "Typing every day improves speed accuracy and confidence while using computers for work study and communication.",
-        "Frontend development uses HTML CSS and JavaScript to build interactive and modern websites."
-      ],
+easy:[
 
-      medium:[
-        "Programming regularly helps developers improve logical thinking debugging skills and overall software development experience across different technologies and frameworks.",
-        "JavaScript is one of the most important programming languages because it powers interactive websites applications and many modern frontend systems."
-      ],
+`Technology has changed the modern world rapidly over the last few decades. People now depend heavily on smartphones computers and internet services for communication education entertainment and business activities. Students use online platforms to learn programming design and many other technical skills from their homes while companies shift toward digital systems to improve productivity and reduce manual work across industries.`
 
-      hard:[
-        "Artificial intelligence is rapidly transforming industries by automating repetitive workflows improving data analysis and assisting developers with advanced problem solving techniques across modern applications.",
-        "Building complex frontend applications requires strong understanding of responsive design state management asynchronous programming and efficient user interface optimization."
-      ]
+],
 
-    };
+medium:[
 
-    const typingText = document.getElementById("typingText");
-    const inputBox = document.getElementById("inputBox");
+`Programming is one of the most valuable technical skills because software powers almost every modern service and application used around the world. Developers create websites mobile applications banking systems ecommerce platforms educational portals and management tools for millions of users daily. Becoming a strong developer requires patience logical thinking problem solving consistency and continuous practice with real projects and modern technologies.`
 
-    const wpmText = document.getElementById("wpm");
-    const accuracyText = document.getElementById("accuracy");
-    const mistakesText = document.getElementById("mistakes");
-    const timeText = document.getElementById("time");
-    const progressText = document.getElementById("progressText");
+],
 
-    const progressBar = document.getElementById("progressBar");
+hard:[
 
-    const difficulty = document.getElementById("difficulty");
+`Artificial intelligence is transforming industries rapidly by automating repetitive tasks improving data analysis and assisting developers with advanced coding solutions. Modern frontend development requires deep understanding of responsive layouts asynchronous JavaScript animations API integration accessibility optimization and efficient user experience design. Developers who continuously improve their practical skills through projects and real world problem solving will remain highly valuable despite rapid technological advancements.`
 
-    let timer;
-    let maxTime = 60;
-    let timeLeft = maxTime;
-    let started = false;
+]
 
-    let mistakes = 0;
-    let charIndex = 0;
-    let currentText = "";
+};
 
-    function loadParagraph(){
+const typingText = document.getElementById("typingText");
+const inputBox = document.getElementById("inputBox");
 
-      const level = difficulty.value;
+const wpmText = document.getElementById("wpm");
+const accuracyText = document.getElementById("accuracy");
+const mistakesText = document.getElementById("mistakes");
+const timeText = document.getElementById("time");
+const progressText = document.getElementById("progressText");
 
-      const data = paragraphs[level];
+const progressBar = document.getElementById("progressBar");
+const difficulty = document.getElementById("difficulty");
 
-      currentText = data[Math.floor(Math.random() * data.length)];
+let timer;
+let maxTime = 60;
+let timeLeft = maxTime;
+let started = false;
 
-      typingText.innerHTML = "";
+let mistakes = 0;
+let currentText = "";
 
-      currentText.split("").forEach(char => {
+function loadParagraph(){
 
-        const span = document.createElement("span");
+  const level = difficulty.value;
 
-        span.innerText = char;
+  const data = paragraphs[level];
 
-        typingText.appendChild(span);
+  currentText = data[Math.floor(Math.random() * data.length)];
 
-      });
+  typingText.innerHTML = "";
 
-      typingText.querySelectorAll("span")[0].classList.add("active");
+  currentText.split("").forEach(char => {
+
+    const span = document.createElement("span");
+
+    span.innerText = char;
+
+    typingText.appendChild(span);
+
+  });
+
+}
+
+loadParagraph();
+
+inputBox.addEventListener("input", () => {
+
+  const characters = typingText.querySelectorAll("span");
+
+  const typedText = inputBox.value;
+
+  let correctChars = 0;
+
+  mistakes = 0;
+
+  if(!started && typedText.length > 0){
+
+    timer = setInterval(initTimer,1000);
+
+    started = true;
+
+  }
+
+  characters.forEach((charSpan,index) => {
+
+    const typedChar = typedText[index];
+
+    if(typedChar == null){
+
+      charSpan.classList.remove("correct","wrong","active");
 
     }
 
-    loadParagraph();
+    else if(typedChar === charSpan.innerText){
 
-    inputBox.addEventListener("input", () => {
+      charSpan.classList.add("correct");
 
-      const characters = typingText.querySelectorAll("span");
+      charSpan.classList.remove("wrong");
 
-      const typedChar = inputBox.value.charAt(charIndex);
-
-      if(!started){
-
-        timer = setInterval(initTimer,1000);
-
-        started = true;
-
-      }
-
-      if(typedChar == null){
-
-        charIndex--;
-
-      }
-      else{
-
-        if(typedChar === characters[charIndex].innerText){
-
-          characters[charIndex].classList.add("correct");
-
-        }
-        else{
-
-          mistakes++;
-
-          mistakesText.innerText = mistakes;
-
-          characters[charIndex].classList.add("wrong");
-
-        }
-
-        charIndex++;
-
-      }
-
-      characters.forEach(span => span.classList.remove("active"));
-
-      if(characters[charIndex]){
-
-        characters[charIndex].classList.add("active");
-
-      }
-
-      // Accuracy
-      let accuracy = Math.floor(((charIndex - mistakes) / charIndex) * 100);
-
-      accuracy = accuracy < 0 || !accuracy ? 0 : accuracy;
-
-      accuracyText.innerText = accuracy + "%";
-
-      // WPM
-      let wpm = Math.floor((((charIndex - mistakes) / 5) / (maxTime - timeLeft)) * 60);
-
-      wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
-
-      wpmText.innerText = wpm;
-
-      // Progress
-      let progress = Math.floor((charIndex / currentText.length) * 100);
-
-      progressBar.style.width = progress + "%";
-
-      progressText.innerText = progress + "%";
-
-      if(charIndex === currentText.length){
-
-        clearInterval(timer);
-
-      }
-
-    });
-
-    function initTimer(){
-
-      if(timeLeft > 0){
-
-        timeLeft--;
-
-        timeText.innerText = timeLeft;
-
-      }
-      else{
-
-        clearInterval(timer);
-
-        inputBox.disabled = true;
-
-      }
+      correctChars++;
 
     }
 
-    function restartTest(){
+    else{
 
-      clearInterval(timer);
+      charSpan.classList.add("wrong");
 
-      timeLeft = maxTime;
-      started = false;
+      charSpan.classList.remove("correct");
 
-      mistakes = 0;
-      charIndex = 0;
-
-      inputBox.value = "";
-      inputBox.disabled = false;
-
-      timeText.innerText = timeLeft;
-      wpmText.innerText = 0;
-      accuracyText.innerText = "0%";
-      mistakesText.innerText = 0;
-      progressText.innerText = "0%";
-
-      progressBar.style.width = "0%";
-
-      loadParagraph();
+      mistakes++;
 
     }
 
-    difficulty.addEventListener("change",restartTest);
+  });
 
-    function toggleTheme(){
+  characters.forEach(span => span.classList.remove("active"));
 
-      document.body.classList.toggle("light-mode");
+  if(characters[typedText.length]){
 
-    }
+    characters[typedText.length].classList.add("active");
 
-  </script>
+  }
+
+  mistakesText.innerText = mistakes;
+
+  let accuracy = Math.floor((correctChars / typedText.length) * 100);
+
+  accuracy = accuracy < 0 || !accuracy ? 0 : accuracy;
+
+  accuracyText.innerText = accuracy + "%";
+
+  let timeSpent = (maxTime - timeLeft) / 60;
+
+  let wpm = Math.floor((correctChars / 5) / timeSpent);
+
+  wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+
+  wpmText.innerText = wpm;
+
+  let progress = Math.floor((typedText.length / currentText.length) * 100);
+
+  progressBar.style.width = progress + "%";
+
+  progressText.innerText = progress + "%";
+
+  if(typedText.length === currentText.length){
+
+    clearInterval(timer);
+
+  }
+
+});
+
+function initTimer(){
+
+  if(timeLeft > 0){
+
+    timeLeft--;
+
+    timeText.innerText = timeLeft;
+
+  }
+  else{
+
+    clearInterval(timer);
+
+    inputBox.disabled = true;
+
+  }
+
+}
+
+function restartTest(){
+
+  clearInterval(timer);
+
+  timeLeft = maxTime;
+  started = false;
+
+  mistakes = 0;
+
+  inputBox.value = "";
+
+  inputBox.disabled = false;
+
+  timeText.innerText = timeLeft;
+
+  wpmText.innerText = 0;
+
+  accuracyText.innerText = "0%";
+
+  mistakesText.innerText = 0;
+
+  progressText.innerText = "0%";
+
+  progressBar.style.width = "0%";
+
+  loadParagraph();
+
+}
+
+difficulty.addEventListener("change",restartTest);
+
+function toggleTheme(){
+
+  document.body.classList.toggle("light-mode");
+
+}
+
+</script>
 
 </body>
 </html>
